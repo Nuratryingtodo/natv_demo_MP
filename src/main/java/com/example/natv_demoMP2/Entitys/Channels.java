@@ -1,10 +1,9 @@
 package com.example.natv_demoMP2.Entitys;
 
 import com.example.natv_demoMP2.Enums.Statuses;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,8 +13,11 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 @Table(name = "channels")
-public class Channels {
+public class Channels{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,11 +27,18 @@ public class Channels {
     @Enumerated(EnumType.STRING)
     Statuses status;
     @Column(name="logo_path")
-    String logoPath;
-    @OneToMany(mappedBy = "channels")
+    String logo;
+    @Column(name = "start_date")
+    @CreationTimestamp
+    Date startDate;
+    @Column(name = "end_date")
+    Date endDate;
+
+
+    @OneToMany(mappedBy = "channels", cascade = CascadeType.PERSIST)
     List<Discounts> discountsList;
-    @OneToMany(mappedBy = "channels")
-    List<Prices> pricesList;
+    @OneToOne(mappedBy = "channels", cascade = CascadeType.PERSIST)
+    Prices pricePerLetter;
 
 
 

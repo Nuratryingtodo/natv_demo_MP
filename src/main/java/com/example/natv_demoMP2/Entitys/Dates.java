@@ -1,17 +1,18 @@
 package com.example.natv_demoMP2.Entitys;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "dates")
 public class Dates {
     @Id
@@ -19,15 +20,6 @@ public class Dates {
     Long id;
     @Column(name="text_order_dates")
     Date textOrderDates;
-
-
-
-
-
-
-
-
-
-
-
+    @OneToMany(mappedBy = "dates")
+    List<TextOrder> textOrder;
 }
